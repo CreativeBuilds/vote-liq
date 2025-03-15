@@ -1,4 +1,4 @@
-# Liquidity Averaging Utility
+# Vote-Liq: Liquidity Voting System
 
 A utility for calculating and managing liquidity preferences and incentives across token pairs.
 
@@ -13,14 +13,14 @@ A utility for calculating and managing liquidity preferences and incentives acro
 ## Installation
 
 ```bash
-npm install liq-avg
+npm install @creativebuilds/vote-liq
 ```
 
 ## Usage as an NPM Module
 
 ```javascript
 // Import the LiquidityManager class
-const LiquidityManager = require('liq-avg');
+const LiquidityManager = require('@creativebuilds/vote-liq');
 
 // Create a new instance
 const manager = new LiquidityManager();
@@ -81,14 +81,14 @@ npm test
 
 To publish this module to NPM:
 
-1. Update the package.json with your details (name, author, repository)
+1. Update the package.json with your details (author, repository)
 2. Login to NPM:
    ```bash
    npm login
    ```
 3. Publish the package:
    ```bash
-   npm publish
+   npm publish --access=public
    ```
 
 ## API Documentation
