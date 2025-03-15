@@ -1,6 +1,6 @@
 {
   "name": "@creativebuilds/vote-liq",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Liquidity averaging utility for token pair incentives with class-based design",
   "main": "index.js",
   "scripts": {
