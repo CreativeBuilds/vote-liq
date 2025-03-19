@@ -1,32 +1,37 @@
 {
   "name": "@creativebuilds/vote-liq",
-  "version": "1.0.1",
-  "description": "Liquidity averaging utility for token pair incentives with class-based design",
-  "main": "index.js",
+  "version": "1.0.2",
+  "description": "A utility for calculating and managing liquidity preferences and incentives across token pairs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
+    "build": "tsc",
     "test": "jest",
-    "demo": "node main.js",
-    "example": "node example.js"
+    "demo": "ts-node main.ts",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [
     "liquidity",
-    "tokens",
-    "incentives",
-    "defi",
-    "voting-power",
-    "class-based"
+    "voting",
+    "subnet",
+    "tokens"
   ],
-  "author": "",
+  "author": "CreativeBuilds",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/creativebuilds/vote-liq.git"
+  "dependencies": {
+    "readline-sync": "^1.4.10"
   },
-  "bugs": {
-    "url": "https://github.com/creativebuilds/vote-liq/issues"
-  },
-  "homepage": "https://github.com/creativebuilds/vote-liq#readme",
   "devDependencies": {
-    "jest": "^29.7.0"
-  }
-} 
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.17.24",
+    "@types/readline-sync": "^1.4.8",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.6",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  },
+  "files": [
+    "dist"
+  ]
+}

@@ -9,6 +9,7 @@ A utility for calculating and managing liquidity preferences and incentives acro
 - Calculate incentivized token pairs based on weighted preferences
 - Normalize weights and voting power
 - Class-based design allowing multiple independent instances
+- Full TypeScript support with type definitions
 
 ## Installation
 
@@ -18,14 +19,14 @@ npm install @creativebuilds/vote-liq
 
 ## Usage as an NPM Module
 
-```javascript
+```typescript
 // Import the LiquidityManager class
-const LiquidityManager = require('@creativebuilds/vote-liq');
+import { LiquidityManager } from '@creativebuilds/vote-liq';
 
-// Create a new instance
+// Create a new instance (always starts with empty state)
 const manager = new LiquidityManager();
 
-// Initialize with custom data (optional)
+// Method 1: Initialize with custom data using the initialize() method
 manager.initialize({
   signedTxs: {
     "address1": [
@@ -37,9 +38,10 @@ manager.initialize({
   }
 });
 
-// Or build up state using the class methods
-manager.updateOwnership('address2', 500000, 0.5);
-manager.addLiquidityPreference('address2', 'TOKEN_C', 'TOKEN_D', 1.0);
+// Method 2: Build up state using individual class methods
+const manager2 = new LiquidityManager();
+manager2.updateOwnership('address2', 500000, 0.5);
+manager2.addLiquidityPreference('address2', 'TOKEN_C', 'TOKEN_D', 1.0);
 
 // Use the instance methods
 const [preferences, err] = manager.addLiquidityPreference('address1', 'TOKEN_E', 'TOKEN_F', 0.5);
@@ -69,6 +71,24 @@ This demo will show you:
 
 Simply press Enter to progress through each step of the demonstration.
 
+## Development
+
+To develop or modify the project:
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Build the project:
+   ```bash
+   npm run build
+   ```
+4. Run tests:
+   ```bash
+   npm test
+   ```
+
 ## Testing
 
 The project uses Jest for testing. To run the tests:
@@ -86,7 +106,11 @@ To publish this module to NPM:
    ```bash
    npm login
    ```
-3. Publish the package:
+3. Build the project:
+   ```bash
+   npm run build
+   ```
+4. Publish the package:
    ```bash
    npm publish --access=public
    ```
@@ -95,27 +119,27 @@ To publish this module to NPM:
 
 ### LiquidityManager Class
 
-```javascript
-// Create a new instance
+```typescript
+// Create a new instance (always starts with empty state)
 const manager = new LiquidityManager();
 ```
 
 ### Core Methods
 
-- `initialize(options)`: Initialize with custom data
-- `reset()`: Reset to empty state
-- `getState()`: Get the current state
+- `initialize(options: LiquidityManagerState): VoidResult`: Initialize with custom data (signedTxs and addyOwnership)
+- `reset(): VoidResult`: Reset to empty state
+- `getState(): LiquidityManagerState`: Get the current state
 
 ### Utility Methods
 
-- `normalizeLiquidityWeights(address)`: Normalizes liquidity allocation weights for an address
-- `getOwnershipDetails(address)`: Gets ownership details for an address
-- `addLiquidityPreference(address, token1, token2, weight)`: Adds or updates a liquidity preference
-- `updateOwnership(address, tokens, percentage)`: Updates ownership details for an address
-- `recalculateVotingPower()`: Recalculates voting power based on current percentages
-- `getIncentivizedPairs()`: Calculates incentivized token pairs across all addresses
-- `getTopIncentivizedPairs(limit)`: Gets the most incentivized pairs, sorted by total incentive
-- `getPairIncentiveDetails(token1, token2)`: Gets incentive details for a specific token pair
+- `normalizeLiquidityWeights(address: string): Result<LiquidityPreference[]>`: Normalizes liquidity allocation weights for an address
+- `getOwnershipDetails(address: string): Result<OwnershipDetails>`: Gets ownership details for an address
+- `addLiquidityPreference(address: string, token1: string, token2: string, weight: number): VoidResult`: Adds or updates a liquidity preference
+- `updateOwnership(address: string, tokens: number, percentage: number): VoidResult`: Updates ownership details for an address
+- `recalculateVotingPower(): void`: Recalculates voting power based on current percentages
+- `getIncentivizedPairs(): Result<IncentivizedPair[]>`: Calculates incentivized token pairs across all addresses
+- `getTopIncentivizedPairs(limit?: number): Result<IncentivizedPair[]>`: Gets the most incentivized pairs, sorted by total incentive
+- `getPairIncentiveDetails(token1: string, token2: string): Result<PairIncentiveDetails>`: Gets incentive details for a specific token pair
 
 All methods follow the pattern of returning `[result, error]` where:
 - `result` is the successful result (or null if there was an error)
